@@ -30,5 +30,38 @@ kubectl create clusterrolebinding alex-cluster-admin-binding --clusterrole=clust
 ```bash
 kubectl apply -f manifests/
 ```
-
-
+# Deploy microsegmantion controller
+1. Clone microsegmantion controller
+```bash
+git clone https://github.com/raffaelespazzoli/microsegmentationcontroller.git
+cd microsegmentationcontroller
+```
+2. Apply the folloing patch so to convert from OCP to native K8s API
+```patch
+diff --git a/microsegmentation-controller.yaml b/microsegmentation-controller.yaml
+index 41cb862..54dee01 100644
+--- a/microsegmentation-controller.yaml
++++ b/microsegmentation-controller.yaml
+@@ -17,11 +17,14 @@ spec:
+       webhook:
+         url: http://microsegmentation-controller:8080/microsegmentation
+ ---
+-apiVersion: v1
+-kind: DeploymentConfig
++apiVersion: apps/v1
++kind: Deployment
+ metadata:
+   name: microsegmentation-controller
+ spec:
++  selector:
++    matchLabels:
++      app: microsegmentation-controller
+   replicas: 1
+   template:
+     metadata:
+```
+# Refereces
+1. https://github.com/GoogleCloudPlatform/metacontroller
+1. https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html
+1. https://blog.openshift.com/networkpolicies-and-microsegmentation/?sc_cid=701f2000000ZzcUAAS
+1. https://github.com/raffaelespazzoli/microsegmentationcontroller
