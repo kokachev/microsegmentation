@@ -36,7 +36,7 @@ kubectl apply -f manifests/
 git clone https://github.com/raffaelespazzoli/microsegmentationcontroller.git
 cd microsegmentationcontroller
 ```
-2. Apply the folloing patch so to convert from OCP to native K8s API
+2. Apply the following patch to convert from OCP to native K8s API
 ```patch
 diff --git a/microsegmentation-controller.yaml b/microsegmentation-controller.yaml
 index 41cb862..54dee01 100644
@@ -60,7 +60,13 @@ index 41cb862..54dee01 100644
    template:
      metadata:
 ```
-# Refereces
+3. Deploy microsegmentation-controller
+```bash
+kubectl create configmap microsegmentation --from-file=microsegmentation.jsonnet 
+kubectl apply -f microsegmentation-controller.yaml
+```
+
+# References
 1. https://github.com/GoogleCloudPlatform/metacontroller
 1. https://istio.io/docs/setup/kubernetes/quick-start-gke-dm.html
 1. https://blog.openshift.com/networkpolicies-and-microsegmentation/?sc_cid=701f2000000ZzcUAAS
