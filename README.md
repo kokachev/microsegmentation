@@ -65,6 +65,12 @@ index 41cb862..54dee01 100644
 kubectl create configmap microsegmentation --from-file=microsegmentation.jsonnet 
 kubectl apply -f microsegmentation-controller.yaml
 ```
+# Expectations
+After everything is created, services annotated with "io.raffa.microsegmentation: 'true'" should have NetworkPolicy created automatically, 
+containing ingress rules for ports listed in a service.
+
+# Actual outcome
+No NetworkPolicies are created, so this solution requires futher troubleshooting.
 
 # References
 1. https://github.com/GoogleCloudPlatform/metacontroller
